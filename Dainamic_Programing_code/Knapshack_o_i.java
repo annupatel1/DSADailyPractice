@@ -45,6 +45,36 @@ public class Knapshack_o_i {
         }
     }
 
+ public static int tabulation(int n,int w,int[] val, int[] wt , int[][] dp )
+ {
+    for(int i=1;i<n+1;i++)
+        {
+            for(int j=1;j<w+1;j++)
+            {
+                int v=val[i-1];
+                int ww=wt[i-1];
+
+                if(ww<=j)
+                {
+                  int include=v+dp[i-1][j-ww];
+                  int exclude=dp[i-1][j];
+                  dp[i][j]=Math.max(include,exclude);
+
+                }
+                else
+                {
+                  int exclude=dp[i-1][j];
+                      dp[i][j]=exclude;
+
+                }
+            }
+        }
+
+return dp[n][w];
+ }
+
+    
+
     public static void main(String[] args) {
         int[] val = {60, 100, 120};
         int[] wt = {10, 20, 30};
@@ -62,5 +92,18 @@ public class Knapshack_o_i {
         }
 
         System.out.println("Memoization Result: " + knapsackMemoization(w, val, wt, n, dp));
+
+
+        // now we do tabulation 
+
+        int[][] dpTab = new int[n + 1][w + 1];
+      
+        
+System.out.println(
+    tabulation(n, w, val, wt, dpTab) + " this result from DP tabulation"
+);
+
+
+
     }
 }
